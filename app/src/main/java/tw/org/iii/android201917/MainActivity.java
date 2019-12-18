@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
+    private MyAsyncTask myAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,17 +16,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    private class MyAsyncTask extends AsyncTask<Void,Void,Void> {
+    public void test1(View view) {
+        myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute("Brad","Peter","Tony");
+
+    }
+
+    private class MyAsyncTask extends AsyncTask<String,Void,Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Log.v("brad", "onPreExecute");
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Void doInBackground(String... names) {
+            Log.v("brad", "doInBackground");
+
+            for (String name : names){
+                Log.v("brad", name);
+            }
+
             return null;
         }
-        
+
         @Override
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
@@ -32,17 +48,20 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            Log.v("brad", "onPostExecute");
         }
 
 
         @Override
         protected void onCancelled(Void aVoid) {
             super.onCancelled(aVoid);
+            Log.v("brad", "onCancelled(xx)");
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
+            Log.v("brad", "onCancelled");
         }
 
     }
