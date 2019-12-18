@@ -6,14 +6,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private MyAsyncTask myAsyncTask;
+    private TextView name1, name2,name3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        name1 = findViewById(R.id.name1);
+        name2 = findViewById(R.id.name2);
+        name3 = findViewById(R.id.name3);
     }
 
     public void test1(View view) {
@@ -22,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class MyAsyncTask extends AsyncTask<String,Void,Void> {
+    private class MyAsyncTask extends AsyncTask<String,String,Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -33,16 +39,30 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(String... names) {
             Log.v("brad", "doInBackground");
 
-            for (String name : names){
-                Log.v("brad", name);
+            for (int i=0; i<names.length; i++){
+                publishProgress(""+i, names[i],
+                        "" +(int)(Math.random()*49+1));
+                try {
+                    Thread.sleep(1000);
+                }catch (Exception e){
+
+                }
             }
 
             return null;
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {
+        protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
+            if (values[0].equals("0")){
+                name1.setText(values[1] + ":" + values[2]);
+            }else if(values[0].equals("1")){
+                name2.setText(values[1] + ":" + values[2]);
+            }else if(values[0].equals("2")){
+                name3.setText(values[1] + ":" + values[2]);
+            }
+
         }
 
         @Override
