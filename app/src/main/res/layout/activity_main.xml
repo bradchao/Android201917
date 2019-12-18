@@ -13,6 +13,12 @@
         android:text="test1"
         android:onClick="test1"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="test2"
+        android:onClick="test2"
+        />
     <TextView
         android:id="@+id/name1"
         android:layout_width="wrap_content"
@@ -27,6 +33,12 @@
         />
     <TextView
         android:id="@+id/name3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        />
+    <TextView
+        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="36sp"

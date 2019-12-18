@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private MyAsyncTask myAsyncTask;
-    private TextView name1, name2,name3;
+    private TextView name1, name2,name3,status;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         name1 = findViewById(R.id.name1);
         name2 = findViewById(R.id.name2);
         name3 = findViewById(R.id.name3);
+        status = findViewById(R.id.status);
     }
 
     public void test1(View view) {
@@ -28,7 +30,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class MyAsyncTask extends AsyncTask<String,String,Void> {
+    public void test2(View view) {
+        if (myAsyncTask != null){
+            Log.v("brad", myAsyncTask.getStatus().name());
+        }
+
+    }
+
+
+    private class MyAsyncTask extends AsyncTask<String,String,String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -36,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(String... names) {
+        protected String doInBackground(String... names) {
             Log.v("brad", "doInBackground");
 
             for (int i=0; i<names.length; i++){
@@ -49,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            return null;
+            return "finish";
         }
 
         @Override
@@ -66,14 +76,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
             Log.v("brad", "onPostExecute");
+            status.setText(result);
         }
 
 
         @Override
-        protected void onCancelled(Void aVoid) {
+        protected void onCancelled(String aVoid) {
             super.onCancelled(aVoid);
             Log.v("brad", "onCancelled(xx)");
         }
